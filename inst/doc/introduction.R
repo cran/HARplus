@@ -171,6 +171,26 @@ renamed_dims <- rename_dims(sl4_data1, mapping_df)
 # Rename both dimensions and list names
 renamed_both <- rename_dims(sl4_data1, mapping_df, rename_list_names = TRUE)
 
+## ----save_har_single, eval=FALSE----------------------------------------------
+# # Load example HAR data
+# har_path <- system.file("extdata", "TAR10-WEL.har", package = "HARplus")
+# har_data <- load_harx(har_path)
+# 
+# # Extract one matrix for demonstration
+# welfare_data <- get_data_by_var("A", har_data)
+# welfare_matrix <- welfare_data[["har_data"]][["A"]]
+# 
+# # Save as a single HAR file
+# save_har(
+#   data_list   = list(WELF = welfare_matrix),
+#   file_path   = file.path(tempdir(), "output_single.har"),
+#   dimensions  = list(WELF = c("REG", "COLUMN")),
+#   value_cols  = c(WELF = "Value"),
+#   long_desc   = c(WELF = "Welfare Decomposition"),
+#   export_sets = TRUE,
+#   lowercase   = FALSE
+# )
+
 ## ----export data, eval=FALSE--------------------------------------------------
 # # Extract data
 # data_multiple <- get_data_by_var(c("qo", "pca"), sl4_data1)

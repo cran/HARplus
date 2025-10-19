@@ -1,4 +1,15 @@
 # HARplus: Enhanced R Package for GEMPACK .har and .sl4 Files
+[![Author](https://img.shields.io/badge/Pattawee.P-blue?label=Author)](https://www.pattawee-pp.com/)
+![Last Updated](https://img.shields.io/github/last-commit/Bodysbobb/GTAPViz?label=Last%20Updated&color=blue) 
+[![Star](https://img.shields.io/github/stars/Bodysbobb/HARplus?style=social)](https://github.com/Bodysbobb/HARplus/stargazers)
+
+[![CRAN](https://www.r-pkg.org/badges/version/HARplus)](https://CRAN.R-project.org/package=HARplus)
+[![GitHub Version](https://img.shields.io/github/v/tag/Bodysbobb/HARplus?label=GitHub%20Version&color=3CB371&sort=semver)](https://github.com/Bodysbobb/HARplus/releases/latest)
+![License](https://img.shields.io/github/license/Bodysbobb/HARplus?color=3CB371)
+
+**Extensions:**  
+[![GTAPViz](https://img.shields.io/badge/GTAPViz-276DC3?style=flat-square&logo=r&logoColor=white)](https://www.pattawee-pp.com/GTAPViz/)
+
 
 ## Overview
 
@@ -26,15 +37,14 @@ HARplus simplifies `.HAR` and `.SL4` file processing. You can:
 
 ## Installation
 
-HARplus is currently under **CRAN review** and will be available there soon. In the meantime, install it directly from GitHub using the following command:
-
+HARplus (version 1.1.0) can be installed directly in R using:
 ```r
-devtools::install_github("Bodysbobb/HARplus")
+install.packages("HARplus")
 ```
 
 ## Quick Guide to HARplus
 
-All commands in this package have several options that allow users to play around with the data more freely and efficiently, not just import and get the data. For a complete guide on HARplus functions, check out the **[Vignette](https://rpubs.com/Bodysbob/1273998/)** or **[GitHub Vignette](https://bodysbobb.github.io/HARplus/)**
+All commands in this package have several options that allow users to play around with the data more freely and efficiently, not just import and get the data. For a complete guide on HARplus functions, check out the **[Vignette](https://rpubs.com/Bodysbob/1273998/)** or **[GitHub Vignette](https://www.pattawee-pp.com/HARplus/)**
 
 Below is a categorized reference of the main functions in HARplus:
 
@@ -63,6 +73,9 @@ Below is a categorized reference of the main functions in HARplus:
 ### Data Export
 - **`export_data()`** – Exports extracted data to CSV, Stata, TXT, RDS, or XLSX, with support for multi-sheet exports.
 
+### Data Saving
+- **`save_har()`** – Saves processed data frames or arrays into GEMPACK-compatible `.HAR` files, automatically generating 1C set headers and supporting up to seven dimensions.  
+
 ## License & Author  
 
 HARplus is released under the **MIT License**. See the full **[license](LICENSE)**.  
@@ -79,7 +92,7 @@ Acknowledgement is due to **Maros Ivanic** for his work on the `HARr` package, w
 
 ## GTAPViz: An Extension of HARplus for Visualization
 
-I have developed another package specifically for visualization, particularly for GTAP users: **[GTAPViz](https://bodysbobb.github.io/GTAPViz/)**
+I have developed another package specifically for visualization, particularly for GTAP users: **[GTAPViz](https://www.pattawee-pp.com/GTAPViz/)**
 
 ## GTAP Database
 
