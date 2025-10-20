@@ -13,7 +13,8 @@ save_har(
   coefficients = NULL,
   export_sets = TRUE,
   lowercase = TRUE,
-  dim_order = NULL
+  dim_order = NULL,
+  dim_rename = NULL
 )
 }
 \arguments{
@@ -43,6 +44,13 @@ save_har(
 \item a named list specifying order for each dimension
 \item a character string giving the path to an Excel or CSV file with order definitions
 }}
+
+\item{dim_rename}{Optional named list to rename dimensions in HAR output.
+\itemize{
+\item Names are original column names, values are desired HAR dimension names
+\item Allows duplicate dimension names in HAR (e.g., COMMxREGxREG from COMMxSREGxDREG)
+\item Example: list(RTMS = c(COMM = "COMM", SREG = "REG", DREG = "REG"))
+}}
 }
 \value{
 Invisibly returns a list containing export metadata, including file path and header summary.
@@ -64,7 +72,7 @@ HAR file format, automatically generating associated 1C set headers.
 har_path <- system.file("extdata", "TAR10-WEL.har", package = "HARplus")
 har_data <- load_harx(har_path)
 welfare_data <- get_data_by_var("A", har_data)
-welfare_data <- welfare_data[["har_data"]][["A"]]
+welfare_data_A <- welfare_data[["har_data"]][["A"]]
 
 save_har(
   data_list   = list(WELF = welfare_data),
@@ -118,6 +126,31 @@ save_har(
     WELF  = "Welfare Decomposition",
     DECOM = "Allocative efficiency effect"
   ),
+  export_sets = TRUE,
+  dim_order   = mapping,
+  lowercase   = FALSE
+)
+
+# Example 4: Rename duplicated dimension names  
+# to export as a single structure (e.g., COMMxREGxREG)
+har_path <- system.file("extdata", "TAR10-WEL.har", package = "HARplus")
+har_data <- load_harx(har_path)
+welfare_data <- get_data_by_var("C17", har_data)
+welfare_data <- welfare_data[["har_data"]][["C17"]] 
+
+mapping <- list(
+  COMM = c("TransComm", "MeatLstk"),
+  REG  = c("SSA", "RestofWorld", "SEAsia")  
+)
+
+# Export HAR
+save_har(
+  data_list   = list(TEST = welfare_data),
+  file_path   = file.path(tempdir(), "output_single.har"),
+  dimensions  = list(TEST = c("COMM", "REG", "REG.1")),
+  value_cols  = list(TEST = "Value"),
+  long_desc   = list(TEST = "Shock RTMS"),
+  dim_rename  = list(TEST = c(COMM = "COMM", SREG = "REG", DREG = "REG.1")),
   export_sets = TRUE,
   dim_order   = mapping,
   lowercase   = FALSE

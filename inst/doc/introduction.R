@@ -177,8 +177,8 @@ renamed_both <- rename_dims(sl4_data1, mapping_df, rename_list_names = TRUE)
 # har_data <- load_harx(har_path)
 # 
 # # Extract one matrix for demonstration
-# welfare_data <- get_data_by_var("A", har_data)
-# welfare_matrix <- welfare_data[["har_data"]][["A"]]
+# welfare_data <- get_data_by_var("C17", har_data)
+# welfare_matrix <- welfare_data[["har_data"]][["C17"]]
 # 
 # # Save as a single HAR file
 # save_har(
@@ -187,7 +187,9 @@ renamed_both <- rename_dims(sl4_data1, mapping_df, rename_list_names = TRUE)
 #   dimensions  = list(WELF = c("REG", "COLUMN")),
 #   value_cols  = c(WELF = "Value"),
 #   long_desc   = c(WELF = "Welfare Decomposition"),
+#   dim_rename  = list(RTMS = c(COMM = "COMM", SREG = "REG", DREG = "REG")),
 #   export_sets = TRUE,
+#   dim_order   = NULL,
 #   lowercase   = FALSE
 # )
 

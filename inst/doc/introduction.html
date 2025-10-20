@@ -12,7 +12,7 @@
 
 <meta name="author" content="Pattawee Puangchit" />
 
-<meta name="date" content="2025-10-18" />
+<meta name="date" content="2025-10-19" />
 
 <title>Enhanced R Package for GEMPACK .HAR and .SL4 File Processing</title>
 
@@ -342,7 +342,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Enhanced R Package for GEMPACK .HAR and
 .SL4 File Processing</h1>
 <h4 class="author">Pattawee Puangchit</h4>
-<h4 class="date">2025-10-18</h4>
+<h4 class="date">2025-10-19</h4>
 
 
 
@@ -891,20 +891,17 @@ limitation<br />
 </li>
 <li>Supports up to seven dimensions and approximately 2 million elements
 per chunk</li>
+<li>Allows <strong>dimension renaming</strong> and supports
+<strong>duplicate dimension names</strong> (e.g.,
+<code>COMMxREGxREG</code>) during export</li>
 </ul>
-<p><strong>Note:</strong><br />
-To rename dimensions, first rename the corresponding column names in
-your data (e.g., using <code>dplyr::rename()</code> or
-<code>data.table::setnames()</code>).<br />
-Each dimension name in a <code>.HAR</code> file must be no longer than
-<strong>four characters</strong>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># Load example HAR data</span></span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>har_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;TAR10-WEL.har&quot;</span>, <span class="at">package =</span> <span class="st">&quot;HARplus&quot;</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>har_data <span class="ot">&lt;-</span> <span class="fu">load_harx</span>(har_path)</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co"># Extract one matrix for demonstration</span></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>welfare_data <span class="ot">&lt;-</span> <span class="fu">get_data_by_var</span>(<span class="st">&quot;A&quot;</span>, har_data)</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>welfare_matrix <span class="ot">&lt;-</span> welfare_data[[<span class="st">&quot;har_data&quot;</span>]][[<span class="st">&quot;A&quot;</span>]]</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>welfare_data <span class="ot">&lt;-</span> <span class="fu">get_data_by_var</span>(<span class="st">&quot;C17&quot;</span>, har_data)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>welfare_matrix <span class="ot">&lt;-</span> welfare_data[[<span class="st">&quot;har_data&quot;</span>]][[<span class="st">&quot;C17&quot;</span>]]</span>
 <span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
 <span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co"># Save as a single HAR file</span></span>
 <span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="fu">save_har</span>(</span>
@@ -913,9 +910,11 @@ Each dimension name in a <code>.HAR</code> file must be no longer than
 <span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  <span class="at">dimensions  =</span> <span class="fu">list</span>(<span class="at">WELF =</span> <span class="fu">c</span>(<span class="st">&quot;REG&quot;</span>, <span class="st">&quot;COLUMN&quot;</span>)),</span>
 <span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>  <span class="at">value_cols  =</span> <span class="fu">c</span>(<span class="at">WELF =</span> <span class="st">&quot;Value&quot;</span>),</span>
 <span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>  <span class="at">long_desc   =</span> <span class="fu">c</span>(<span class="at">WELF =</span> <span class="st">&quot;Welfare Decomposition&quot;</span>),</span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>  <span class="at">export_sets =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>  <span class="at">lowercase   =</span> <span class="cn">FALSE</span></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>  <span class="at">dim_rename  =</span> <span class="fu">list</span>(<span class="at">RTMS =</span> <span class="fu">c</span>(<span class="at">COMM =</span> <span class="st">&quot;COMM&quot;</span>, <span class="at">SREG =</span> <span class="st">&quot;REG&quot;</span>, <span class="at">DREG =</span> <span class="st">&quot;REG&quot;</span>)),</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>  <span class="at">export_sets =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>  <span class="at">dim_order   =</span> <span class="cn">NULL</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>  <span class="at">lowercase   =</span> <span class="cn">FALSE</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 </div>
 <div id="exporting-data-to-csvstatatextrdsxlsx" class="section level1">
